@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Tennis Score</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="app_title">Score Tennis</string>
+    <string name="player_one_name">Player 1 name</string>
+    <string name="player_two_name">Player 2 name</string>
+    <string name="audio">AUDIO</string>
+    <string name="stop_match">STOP MATCH</string>
+    <string name="start_new_match">START NEW MATCH</string>
+    <string name="undo">UNDO</string>
+    <string name="plus">+</string>
+    <string name="points">POINTS</string>
+    <string name="games">GAMES</string>
+    <string name="sets">SETS</string>
+    <string name="best_of_three">Best of “3”</string>
+    <string name="best_of_five">Best of “5”</string>
+    <string name="player_one">Player one</string>
+    <string name="player_two">Player two</string>
+    <string name="won_the_game">" won the game!"</string>
+    <string name="cant_change_game_tipe">You can\'t change game type during the game.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="confirm_new_match_title">Are you Sure You want to Start a New Match?</string>
+    <string name="confirm_stop_match_title">Are you sure want to stop match?</string>
+    <string name="confirm_exit_app">Are you sure you want exit?</string>
+
+
+    //Facebook ID APP
+    <string name="facebook_app_id">571376993042160</string>
+
+    //VK ID APP 5459252
+    <!--// <integer name="com_vk_sdk_AppId">5459252</integer>-->
+    <!--<integer name="com_vk_sdk_AppId">3974615</integer>-->
+
+    <string name="ok_public_key">BxdzlEfRetUSUrpyqzOT</string>
+    <string name="ok_secret_key">72267E397CDDD419636A8BAF960B666F7F9D6242</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+
+    <string name="send_twitter_message">Send Twitt</string>
+    <string name="twitter_logout">Logout</string>
+    <string name="tv_version_splash">Build version v.1</string>
+
+    <integer name="com_vk_sdk_AppId">5459252</integer>
+
+    <string name="action_sign_in_short">Sign in with VK</string>
+    <string name="action_sign_in_force">Force OAuth</string>
+    <string name="users_get">users.get</string>
+    <string name="friends_get">friends.get</string>
+    <string name="messages_get">messages.get</string>
+    <string name="dialogs_get">dialogs.get</string>
+    <string name="captcha_force">captcha.force</string>
+    <string name="wall_post">wall.post</string>
+    <string name="wall_getById">wall.getById</string>
+    <string name="upload_photo">upload photo</string>
+    <string name="upload_photo_to_wall">upload photo to wall</string>
+    <string name="upload_several_photos_to_wall">upload several photos to wall</string>
+    <string name="upload_doc">upload doc</string>
+    <string name="continue_using_app">Continue using test application</string>
+    <string name="test_validation">Test validation</string>
+    <string name="test_share">Test share dialog</string>
+    <string name="test_send_request">Test send request</string>
+    <string name="logout">Logout</string>
+
+    <string name="send_request_title">Choose friend</string>
+
+    //Google+
+    <string name="server_client_id">1092181658928-id13uj25lm7k92s9rrbduuapss3v79a5.apps.googleusercontent.com</string>
+    <!-- Button labels -->
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="gcm_defaultSenderID" />
+
+</resources>
