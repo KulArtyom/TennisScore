@@ -1,14 +1,17 @@
 package com.kulartyom.tennisscoreapp.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.kulartyom.tennisscoreapp.R;
+import com.kulartyom.tennisscoreapp.constans.Constants;
 
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,15 +24,17 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     // ===========================================================
     // Fields
     // ===========================================================
+    private LinearLayout mLinearLayout;
+
     private ImageView ivVkontakte;
     private ImageView ivFacebook;
     private ImageView ivGoogle;
     private ImageView ivTwitter;
 
-    private Button mButtonCrash;
+    private Button mButtonRateUs;
+    private Button mButtonReportBug;
 
-
-    // ===========================================================
+    // ==========================================================
     // Constructors
     // ===========================================================
 
@@ -40,38 +45,18 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     // ===========================================================
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
-//    VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
-//        @Override
-//        public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
-//            if (newToken == null) {
-//                Toast.makeText(InfoActivity.this, "AccessToken invalidated", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(InfoActivity.this, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        }
-//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_info);
+        findViews();
+        setListeners();
 
 
-        ivVkontakte = (ImageView) findViewById(R.id.iv_vk_share);
-        ivFacebook = (ImageView) findViewById(R.id.iv_facebook_share);
-        ivGoogle = (ImageView) findViewById(R.id.iv_google_share);
-        ivTwitter = (ImageView) findViewById(R.id.iv_twitter_share);
+        assert mLinearLayout != null;
+        mLinearLayout.setVisibility(View.GONE);
 
-        mButtonCrash = (Button) findViewById(R.id.btnCrash);
-
-        ivFacebook.setOnClickListener(this);
-        ivVkontakte.setOnClickListener(this);
-        ivTwitter.setOnClickListener(this);
-        ivGoogle.setOnClickListener(this);
-        mButtonCrash.setOnClickListener(this);
 
         Log.d(TAG, "InfoActivity onCreate");
     }
@@ -80,26 +65,24 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_facebook_share:
-
                 break;
             case R.id.iv_vk_share:
-
                 break;
             case R.id.iv_google_share:
-
                 break;
             case R.id.iv_twitter_share:
-
                 break;
-            case R.id.btnCrash:
-
+            case R.id.btn_rate:
+                rateMarket();
+                break;
+            case R.id.btn_report_bug:
+                sendMail();
             default:
                 break;
 
         }
         Log.d(TAG, "InfoActivity onClick");
     }
-
 
 
     @Override
@@ -111,7 +94,47 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     // ===========================================================
     // Methods
     // ===========================================================
+    private void rateMarket() {
+        Uri uri = Uri.parse(Constants.MARKET);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 
+    private void findViews() {
+        mLinearLayout = (LinearLayout) findViewById(R.id.ll_social);
+        ivVkontakte = (ImageView) findViewById(R.id.iv_vk_share);
+        ivFacebook = (ImageView) findViewById(R.id.iv_facebook_share);
+        ivGoogle = (ImageView) findViewById(R.id.iv_google_share);
+        ivTwitter = (ImageView) findViewById(R.id.iv_twitter_share);
+        mButtonRateUs = (Button) findViewById(R.id.btn_rate);
+        mButtonReportBug = (Button) findViewById(R.id.btn_report_bug);
+
+        Log.d(TAG, "InfoActivity findViews");
+    }
+
+    private void setListeners() {
+        ivFacebook.setOnClickListener(this);
+        ivVkontakte.setOnClickListener(this);
+        ivTwitter.setOnClickListener(this);
+        ivGoogle.setOnClickListener(this);
+        mButtonRateUs.setOnClickListener(this);
+        mButtonReportBug.setOnClickListener(this);
+
+        Log.d(TAG, "InfoActivity setListeners");
+
+    }
+
+    private void sendMail() {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        String aEmailList[] = {
+                Constants.MAIL
+        };
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, Constants.MAIL_THEME);
+        emailIntent.setType("plain/text");
+        startActivity(Intent.createChooser(emailIntent, Constants.SEND_EMAIL_CHOOSER_TITLE));
+    }
 
     // ===========================================================
     // Inner and Anonymous Classes

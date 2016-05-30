@@ -1,7 +1,6 @@
 package com.kulartyom.tennisscoreapp.ui;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kulartyom.tennisscoreapp.R;
+import com.kulartyom.tennisscoreapp.database.Games;
 import com.kulartyom.tennisscoreapp.dialogs.ConfirmActionDialog;
 import com.kulartyom.tennisscoreapp.dialogs.ConfirmActionStopDialog;
 import com.kulartyom.tennisscoreapp.dialogs.SettingsDialogFragment;
@@ -20,11 +20,12 @@ import com.kulartyom.tennisscoreapp.logic.Game;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        SettingsDialogFragment.OnAppSettingsChangedListener, Game.OnScoreUpdateListener, ConfirmActionDialog.ConfirmActionListener, ConfirmActionStopDialog.ConfirmActionStopListener {
+        SettingsDialogFragment.OnAppSettingsChangedListener, Game.OnScoreUpdateListener, ConfirmActionDialog.ConfirmActionListener, ConfirmActionStopDialog.ConfirmActionStopListener, Game.OnWinListener {
     // ===========================================================
     // Constants
     // ===========================================================
     public static final String TAG = MainActivity.class.getSimpleName();
+
 
     // ===========================================================
     // Fields
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mIvInfoIcon = (ImageView) root.findViewById(R.id.iv_info_icon);
         mIvInfoIcon.setOnClickListener(this);
 
-        mIvArchiveIcon = (ImageView)root.findViewById(R.id.iv_archive);
+        mIvArchiveIcon = (ImageView) root.findViewById(R.id.iv_archive);
         mIvArchiveIcon.setOnClickListener(this);
 
         toolbar.addView(root);
@@ -113,12 +114,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mIvPlayIconPlayerOne = (ImageView) findViewById(R.id.iv_player_one_indicator);
         mIvPlayIconPlayerTwo = (ImageView) findViewById(R.id.iv_player_two_indicator);
 
-        mIvSettingsIcon = (ImageView) findViewById(R.id.iv_settings_icon);
-        mIvInfoIcon = (ImageView) findViewById(R.id.iv_info_icon);
-
         mIvSoundIcon = (ImageView) findViewById(R.id.iv_sound_icon);
 
-        mGame = new Game(this, this);
+        mGame = new Game(this, this, this);
         mGame.setPlayersNames(mTvPlayerOneName.getText().toString(), mTvPlayerTwoName.getText().toString());
 
         showSettings();
@@ -185,6 +183,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.iv_info_icon:
                 showInfoActivity();
+                break;
+            case R.id.iv_archive:
+                showArchiveActivity();
             default:
                 break;
         }
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onScoreUpdated(Game.GameStatus status) {
+
         mTvPlayerOnePoints.setText(String.valueOf(status.playerOnePoints));
         mTvPlayerOneGames.setText(String.valueOf(status.playerOneGames));
         mTvPlayerOneSets.setText(String.valueOf(status.playerOneSets));
@@ -201,7 +203,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvPlayerTwoSets.setText(String.valueOf(status.playerTwoSets));
 
         updateServing(status.playerOneIsServing);
+
     }
+
+    @Override
+    public void onWinStatus() {
+        baseUpdate();
+    }
+
 
     @Override
     public void onConfirm() {
@@ -265,6 +274,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    private void showArchiveActivity() {
+        Intent intent = new Intent(this, ArchiveActivity.class);
+        startActivity(intent);
+    }
+
     private void addScorePlayerOne() {
         mGame.addScorePlayerOne();
     }
@@ -312,6 +326,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SettingsDialogFragment.getInstance(this, mTvPlayerOneName.getText().toString(),
                 mTvPlayerTwoName.getText().toString(), mGame.getGameType())
                 .show(getFragmentManager(), SettingsDialogFragment.TAG);
+    }
+
+    public void baseUpdate() {
+        Games g = new Games(mTvPlayerOneName.getText().toString(),
+                mTvPlayerTwoName.getText().toString(),
+                mTvPlayerOneSets.getText().toString(),
+                mTvPlayerTwoSets.getText().toString());
+        g.save();
     }
 
 

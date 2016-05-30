@@ -7,16 +7,27 @@
     android:paddingBottom="@dimen/half_padding"
     android:paddingTop="@dimen/half_padding">
 
+
+    <ImageView
+        android:id="@+id/iv_title"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:background="@drawable/toolbar_ball"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/tv_title" />
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="27dp"
         android:layout_centerVertical="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:text="@string/app_title"
         android:textColor="@color/color_pb"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_toRightOf="@id/iv_title"
+        />
 
     <LinearLayout
         android:id="@+id/ll_toolbar"
@@ -33,12 +44,14 @@
             android:layout_height="27dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_settings" />
+
         <ImageView
             android:id="@+id/iv_archive"
             android:layout_width="27dp"
             android:layout_height="27dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_assignment" />
+
         <ImageView
             android:id="@+id/iv_info_icon"
             android:layout_width="27dp"

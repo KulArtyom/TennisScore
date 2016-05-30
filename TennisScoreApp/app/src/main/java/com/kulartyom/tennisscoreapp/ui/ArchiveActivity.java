@@ -1,27 +1,30 @@
 package com.kulartyom.tennisscoreapp.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.kulartyom.tennisscoreapp.R;
-import com.kulartyom.tennisscoreapp.constans.Constants;
+import com.kulartyom.tennisscoreapp.database.Games;
 
+import java.util.List;
 
-public class SplashActivity extends AppCompatActivity {
-
+public class ArchiveActivity extends AppCompatActivity {
     // ===========================================================
     // Constants
     // ===========================================================
-    public static final String TAG = SplashActivity.class.getSimpleName();
-
+    private static final String TAG = ArchiveActivity.class.getSimpleName();
 
     // ===========================================================
     // Fields
     // ===========================================================
+
+
+    private TextView textView;
+    private Button mButtonClear;
+    private List<Games> allContacts;
 
 
     // ===========================================================
@@ -35,26 +38,34 @@ public class SplashActivity extends AppCompatActivity {
     // ===========================================================
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
-        splashIntent();
-        Log.d(TAG, "SplashActivity onCreate");
+        setContentView(R.layout.activity_archive);
+        findViews();
+
+//        SugarDb sugarDb = new SugarDb(getApplicationContext());
+//        new File(sugarDb.getDB().getPath()).delete();
+//        Games.findById(Games.class, (long) 1);
+
+        allContacts = Games.listAll(Games.class);
+        textView.setText(allContacts.toString());
+        mButtonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Games.deleteAll(Games.class);
+                textView.setText(null);
+            }
+        });
     }
 
     // ===========================================================
     // Methods
     // ===========================================================
-    private void splashIntent() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent splash = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(splash);
-            }
-        }, Constants.SPLASH_TIME_OUT);
-        Log.d(TAG, "SplashActivity splashIntent");
+    private void findViews() {
+        textView = (TextView) findViewById(R.id.tv_archive);
+        mButtonClear = (Button) findViewById(R.id.btn_clear);
     }
 
     // ===========================================================

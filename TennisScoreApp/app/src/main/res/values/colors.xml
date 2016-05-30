@@ -31,6 +31,10 @@
     <color name="grey_light">#FFCCCCCC</color>
     <color name="dark">#4b4b4b</color>
 
-    <color name="color_twitter_buttons">#19bfe5</color>
-    <color name="color_twitter_buttons_pressed">#149ab9</color>
+
+    <color name="white_bg">#2effffff</color>
+    <color name="link_color">#4b9afc</color>
+
+
+
 </resources>

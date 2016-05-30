@@ -8,6 +8,8 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.kulartyom.tennisscoreapp.R;
+import com.kulartyom.tennisscoreapp.database.Games;
+import com.kulartyom.tennisscoreapp.ui.MainActivity;
 
 
 public class Game {
@@ -34,6 +36,7 @@ public class Game {
     public static final int GAME_STATUS_DEUCE = 1;
     public static final int GAME_STATUS_TIE_BREAK = 2;
 
+
     // ===========================================================
     // Fields
     // ===========================================================
@@ -41,6 +44,7 @@ public class Game {
     private final int[] mPreviousGameScorePlayerTwo = {0, 0, 0};
 
     private OnScoreUpdateListener mListener;
+    private OnWinListener mListenerWin;
 
     private int mGameType;
 
@@ -75,8 +79,9 @@ public class Game {
     // ===========================================================
     // Constructors
     // ===========================================================
-    public Game(OnScoreUpdateListener listener, Context context) {
+    public Game(OnScoreUpdateListener listener, Context context, OnWinListener listenerWin) {
         mListener = listener;
+        mListenerWin = listenerWin;
         mGameType = GAME_TYPE_3;
         mContext = context;
 
@@ -99,6 +104,7 @@ public class Game {
         mCurrentGameStatus = new GameStatus();
 
         callUpdateCallback(false);
+
     }
 
     // ===========================================================
@@ -435,7 +441,13 @@ public class Game {
         if (changeOver)
             mCurrentGameStatus.playerOneIsServing = !mCurrentGameStatus.playerOneIsServing;
         mListener.onScoreUpdated(mCurrentGameStatus);
+
     }
+
+    private void callWinCallback() {
+        mListenerWin.onWinStatus();
+    }
+
 
     private void gameWinPlayerOne() {
         playSound(mSoundIdGame);
@@ -477,6 +489,7 @@ public class Game {
         playSound(mSoundIdMatch);
         mWinToastPlayerOne.show();
         mWin = true;
+        callWinCallback();
     }
 
 
@@ -521,6 +534,7 @@ public class Game {
         playSound(mSoundIdMatch);
         mWinToastPlayerTwo.show();
         mWin = true;
+        callWinCallback();
     }
 
     public boolean canChangeGameType() {
@@ -569,7 +583,11 @@ public class Game {
     // Inner and Anonymous Classes
     // ===========================================================
     public interface OnScoreUpdateListener {
-        public void onScoreUpdated(GameStatus status);
+        void onScoreUpdated(GameStatus status);
+    }
+
+    public interface OnWinListener {
+        void onWinStatus();
     }
 
     public static class GameStatus {

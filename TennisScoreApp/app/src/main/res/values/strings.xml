@@ -41,7 +41,7 @@
 
     <string name="send_twitter_message">Send Twitt</string>
     <string name="twitter_logout">Logout</string>
-    <string name="tv_version_splash">Build version v.1</string>
+    <string name="tv_version_splash">Build version 1.0</string>
 
     <integer name="com_vk_sdk_AppId">5459252</integer>
 
@@ -72,5 +72,8 @@
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="gcm_defaultSenderID" />
+    <string name="_2016_becool">©2016 BeCool</string>
+    <string name="leave_a_review">Rate us</string>
+    <string name="report_bug">Report bug</string>
 
 </resources>
