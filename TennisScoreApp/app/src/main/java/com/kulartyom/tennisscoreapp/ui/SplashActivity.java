@@ -18,7 +18,6 @@ public class SplashActivity extends AppCompatActivity {
     // ===========================================================
     public static final String TAG = SplashActivity.class.getSimpleName();
 
-
     // ===========================================================
     // Fields
     // ===========================================================

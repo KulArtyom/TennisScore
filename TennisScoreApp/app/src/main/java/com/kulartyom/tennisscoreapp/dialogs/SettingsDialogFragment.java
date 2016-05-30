@@ -15,8 +15,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.kulartyom.tennisscoreapp.R;
+import com.kulartyom.tennisscoreapp.constans.Constants;
 import com.kulartyom.tennisscoreapp.logic.Game;
-import com.kulartyom.tennisscoreapp.utils.ActivityUtils;
 
 
 public class SettingsDialogFragment extends DialogFragment implements View.OnClickListener, TextWatcher {
@@ -87,7 +87,7 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
 
         Bundle args = getArguments();
         if (args != null) {
-            int gameType = args.getInt(ActivityUtils.ARG_GAME_TYPE);
+            int gameType = args.getInt(Constants.ARG_GAME_TYPE);
             if (gameType == Game.GAME_TYPE_3) {
                 mRbBestOfThree.setChecked(true);
             } else {
@@ -124,9 +124,9 @@ public class SettingsDialogFragment extends DialogFragment implements View.OnCli
         SettingsDialogFragment settingsDialogFragment = new SettingsDialogFragment();
         settingsDialogFragment.setListener(listener);
         Bundle args = new Bundle();
-        args.putString(ActivityUtils.ARG_PLAYER_ONE_NAME, namePlayerOne);
-        args.putString(ActivityUtils.ARG_PLAYER_TWO_NAME, namePlayerTwo);
-        args.putInt(ActivityUtils.ARG_GAME_TYPE, gameType);
+        args.putString(Constants.ARG_PLAYER_ONE_NAME, namePlayerOne);
+        args.putString(Constants.ARG_PLAYER_TWO_NAME, namePlayerTwo);
+        args.putInt(Constants.ARG_GAME_TYPE, gameType);
         settingsDialogFragment.setArguments(args);
         return settingsDialogFragment;
     }

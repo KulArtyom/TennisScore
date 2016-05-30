@@ -5,7 +5,10 @@ package com.kulartyom.tennisscoreapp.constans;
  */
 public class Constants {
 
-    //Twitter
+    public static final String ARG_PLAYER_ONE_NAME = "ARG_PLAYER_ONE_NAME";
+    public static final String ARG_PLAYER_TWO_NAME = "ARG_PLAYER_TWO_NAME";
+    public static final String ARG_GAME_TYPE = "ARG_GAME_TYPE";
+
     public static final String TWITTER_KEY = "6CI7Ym4uN9ccnmjXhIGjjVhG4";
     public static final String TWITTER_SECRET = "EdjLTUokaDrDxFzUimCwHwPdSGtWkQ6dYruGu4HUbe87mB8fJX";
 

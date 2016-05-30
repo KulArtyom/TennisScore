@@ -72,53 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        assert toolbar != null;
-        toolbar.setContentInsetsAbsolute(0, 0);
-        View root = View.inflate(this, R.layout.custom_action_bar, null);
-
-        mIvSettingsIcon = (ImageView) root.findViewById(R.id.iv_settings_icon);
-        mIvSettingsIcon.setOnClickListener(this);
-
-        mIvInfoIcon = (ImageView) root.findViewById(R.id.iv_info_icon);
-        mIvInfoIcon.setOnClickListener(this);
-
-        mIvArchiveIcon = (ImageView) root.findViewById(R.id.iv_archive);
-        mIvArchiveIcon.setOnClickListener(this);
-
-        toolbar.addView(root);
-
-        setSupportActionBar(toolbar);
-
-        findViewById(R.id.btn_plus_one).setOnClickListener(this);
-        findViewById(R.id.btn_plus_two).setOnClickListener(this);
-        findViewById(R.id.ll_undo).setOnClickListener(this);
-        findViewById(R.id.btn_start).setOnClickListener(this);
-        findViewById(R.id.btn_stop).setOnClickListener(this);
-
-        mLlSoundToggler = (LinearLayout) findViewById(R.id.ll_sound_toggler);
-        mLlSoundToggler.setOnClickListener(this);
-
-        mTvPlayerOneName = (TextView) findViewById(R.id.tv_name_one);
-        mTvPlayerTwoName = (TextView) findViewById(R.id.tv_name_two);
-
-        mTvPlayerOnePoints = (TextView) findViewById(R.id.tv_points_one);
-        mTvPlayerOneGames = (TextView) findViewById(R.id.tv_game_one);
-        mTvPlayerOneSets = (TextView) findViewById(R.id.tv_sets_one);
-
-        mTvPlayerTwoPoints = (TextView) findViewById(R.id.tv_points_two);
-        mTvPlayerTwoGames = (TextView) findViewById(R.id.tv_game_two);
-        mTvPlayerTwoSets = (TextView) findViewById(R.id.tv_sets_two);
-
-        mIvPlayIconPlayerOne = (ImageView) findViewById(R.id.iv_player_one_indicator);
-        mIvPlayIconPlayerTwo = (ImageView) findViewById(R.id.iv_player_two_indicator);
-
-        mIvSoundIcon = (ImageView) findViewById(R.id.iv_sound_icon);
-
+        findViews();
+        setListeners();
         mGame = new Game(this, this, this);
         mGame.setPlayersNames(mTvPlayerOneName.getText().toString(), mTvPlayerTwoName.getText().toString());
-
         showSettings();
     }
 
@@ -146,37 +103,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mGame.undoLastMove();
                 break;
             case R.id.btn_plus_one:
-                mIvSettingsIcon.setEnabled(false);
-                mIvSettingsIcon.setOnClickListener(null);
-                mIvSettingsIcon.setBackgroundResource(R.drawable.ic_settings_disabled);
-                mIvInfoIcon.setEnabled(false);
-                mIvInfoIcon.setOnClickListener(null);
-                mIvInfoIcon.setBackgroundResource(R.drawable.ic_info_disabled);
-                mIvArchiveIcon.setEnabled(false);
-                mIvArchiveIcon.setOnClickListener(null);
-                mIvArchiveIcon.setBackgroundResource(R.drawable.ic_assigment_disable);
-                addScorePlayerOne();
+                pressButtonOnePlus();
                 break;
             case R.id.btn_plus_two:
-                mIvSettingsIcon.setEnabled(false);
-                mIvSettingsIcon.setOnClickListener(null);
-                mIvSettingsIcon.setBackgroundResource(R.drawable.ic_settings_disabled);
-                mIvInfoIcon.setEnabled(false);
-                mIvInfoIcon.setOnClickListener(null);
-                mIvInfoIcon.setBackgroundResource(R.drawable.ic_info_disabled);
-                mIvArchiveIcon.setEnabled(false);
-                mIvArchiveIcon.setOnClickListener(null);
-                mIvArchiveIcon.setBackgroundResource(R.drawable.ic_assigment_disable);
-                addScorePlayerTwo();
+                pressButtonTwoPlus();
                 break;
             case R.id.btn_start:
-                ConfirmActionDialog dialog_start = ConfirmActionDialog.getInstance(
-                        getString(R.string.confirm_new_match_title), this);
-                dialog_start.show(getFragmentManager(), ConfirmActionDialog.TAG);
+                pressButtonStart();
                 break;
             case R.id.btn_stop:
-                ConfirmActionStopDialog dialog_stop = ConfirmActionStopDialog.getInstance(getString(R.string.confirm_stop_match_title), this);
-                dialog_stop.show(getFragmentManager(), ConfirmActionDialog.TAG);
+                pressButtonStop();
                 break;
             case R.id.iv_settings_icon:
                 showSettings();
@@ -190,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
 
     @Override
     public void onScoreUpdated(Game.GameStatus status) {
@@ -228,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         reset();
         mTvPlayerOneName.setText(null);
         mTvPlayerTwoName.setText(null);
-        showSettings();
+        //showSettings();
     }
 
     @Override
@@ -334,6 +271,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mTvPlayerOneSets.getText().toString(),
                 mTvPlayerTwoSets.getText().toString());
         g.save();
+    }
+
+    private void setListeners() {
+
+        findViewById(R.id.btn_plus_one).setOnClickListener(this);
+        findViewById(R.id.btn_plus_two).setOnClickListener(this);
+        findViewById(R.id.ll_undo).setOnClickListener(this);
+        findViewById(R.id.btn_start).setOnClickListener(this);
+        findViewById(R.id.btn_stop).setOnClickListener(this);
+        mLlSoundToggler.setOnClickListener(this);
+        mIvSettingsIcon.setOnClickListener(this);
+        mIvInfoIcon.setOnClickListener(this);
+        mIvArchiveIcon.setOnClickListener(this);
+
+    }
+
+    private void findViews() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        assert toolbar != null;
+        toolbar.setContentInsetsAbsolute(0, 0);
+        View root = View.inflate(this, R.layout.custom_action_bar, null);
+        mIvSoundIcon = (ImageView) findViewById(R.id.iv_sound_icon);
+        mTvPlayerTwoPoints = (TextView) findViewById(R.id.tv_points_two);
+        mTvPlayerTwoGames = (TextView) findViewById(R.id.tv_game_two);
+        mTvPlayerTwoSets = (TextView) findViewById(R.id.tv_sets_two);
+        mIvPlayIconPlayerOne = (ImageView) findViewById(R.id.iv_player_one_indicator);
+        mIvPlayIconPlayerTwo = (ImageView) findViewById(R.id.iv_player_two_indicator);
+        mTvPlayerOneName = (TextView) findViewById(R.id.tv_name_one);
+        mTvPlayerTwoName = (TextView) findViewById(R.id.tv_name_two);
+        mTvPlayerOnePoints = (TextView) findViewById(R.id.tv_points_one);
+        mTvPlayerOneGames = (TextView) findViewById(R.id.tv_game_one);
+        mTvPlayerOneSets = (TextView) findViewById(R.id.tv_sets_one);
+        mLlSoundToggler = (LinearLayout) findViewById(R.id.ll_sound_toggler);
+        mIvSettingsIcon = (ImageView) root.findViewById(R.id.iv_settings_icon);
+        mIvInfoIcon = (ImageView) root.findViewById(R.id.iv_info_icon);
+        mIvArchiveIcon = (ImageView) root.findViewById(R.id.iv_archive);
+        toolbar.addView(root);
+        setSupportActionBar(toolbar);
+    }
+
+    private void pressButtonOnePlus() {
+        mIvSettingsIcon.setEnabled(false);
+        mIvSettingsIcon.setOnClickListener(null);
+        mIvSettingsIcon.setBackgroundResource(R.drawable.ic_settings_disabled);
+        mIvInfoIcon.setEnabled(false);
+        mIvInfoIcon.setOnClickListener(null);
+        mIvInfoIcon.setBackgroundResource(R.drawable.ic_info_disabled);
+        mIvArchiveIcon.setEnabled(false);
+        mIvArchiveIcon.setOnClickListener(null);
+        mIvArchiveIcon.setBackgroundResource(R.drawable.ic_assigment_disable);
+        addScorePlayerOne();
+    }
+
+    private void pressButtonTwoPlus() {
+        mIvSettingsIcon.setEnabled(false);
+        mIvSettingsIcon.setOnClickListener(null);
+        mIvSettingsIcon.setBackgroundResource(R.drawable.ic_settings_disabled);
+        mIvInfoIcon.setEnabled(false);
+        mIvInfoIcon.setOnClickListener(null);
+        mIvInfoIcon.setBackgroundResource(R.drawable.ic_info_disabled);
+        mIvArchiveIcon.setEnabled(false);
+        mIvArchiveIcon.setOnClickListener(null);
+        mIvArchiveIcon.setBackgroundResource(R.drawable.ic_assigment_disable);
+        addScorePlayerTwo();
+    }
+
+    private void pressButtonStart() {
+        ConfirmActionDialog dialog_start = ConfirmActionDialog.getInstance(
+                getString(R.string.confirm_new_match_title), this);
+        dialog_start.show(getFragmentManager(), ConfirmActionDialog.TAG);
+    }
+
+    private void pressButtonStop() {
+        ConfirmActionStopDialog dialog_stop = ConfirmActionStopDialog.getInstance(getString(R.string.confirm_stop_match_title), this);
+        dialog_stop.show(getFragmentManager(), ConfirmActionDialog.TAG);
     }
 
 

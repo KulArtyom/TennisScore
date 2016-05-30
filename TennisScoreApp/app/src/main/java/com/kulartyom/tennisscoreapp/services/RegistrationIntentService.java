@@ -31,4 +31,8 @@ public class RegistrationIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
     }
+
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
 }
