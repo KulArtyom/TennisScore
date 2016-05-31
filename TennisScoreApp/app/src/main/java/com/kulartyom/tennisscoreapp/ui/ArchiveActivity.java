@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.kulartyom.tennisscoreapp.R;
 import com.kulartyom.tennisscoreapp.database.Games;
-import com.orm.SugarDb;
-
-import java.io.File;
 import java.util.List;
 
 public class ArchiveActivity extends AppCompatActivity {
@@ -46,7 +43,7 @@ public class ArchiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
         findViews();
-        
+
         allContacts = Games.listAll(Games.class);
         textView.setText(allContacts.toString());
         mButtonClear.setOnClickListener(new View.OnClickListener() {
